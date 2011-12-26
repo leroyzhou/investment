@@ -6,8 +6,6 @@ class Bond < ActiveRecord::Base
   attr_accessor :tenThousandRevenue
   attr_accessor :tenThousandCompoundInterest
   
-  TAX_RATE = 0.2
-  
   def hold_years
     Lei::Utils.distance_years(self.issue_date.advance(:years => self.term), Time.now).round(2)
   end
@@ -29,7 +27,7 @@ class Bond < ActiveRecord::Base
   end
   
   def total_revenue
-    tax_rate = self.name.include?("ab") ? 0 : 0.2
+    tax_rate = Lei::Investment::Bond.tax_rate(self.name, self.code)
     @totalRevenue ||= Lei::Investment::Bond.total_revenue(self.price, self.interest, self.revenue_years,tax_rate).round(2)
   end
   

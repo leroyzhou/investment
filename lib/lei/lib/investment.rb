@@ -1,16 +1,25 @@
+#encoding: UTF-8
 require 'mathn'
 
 module Lei
   module Investment
     
     module Bond
-      def self.total_revenue(buying_price, interest, interest_years,tax_rate=0.2,selling_price=100)
-       (selling_price - buying_price) + year_revenue(interest)*interest_years
+      
+      TAX_RATE = 0.2
+      
+      def self.total_revenue(buying_price, interest, interest_years,tax_rate=TAX_RATE,selling_price=100)
+       (selling_price - buying_price) + year_revenue(interest,tax_rate)*interest_years
      end
      
-      def self.year_revenue(interest,tax_rate=0.2)
+      def self.year_revenue(interest,tax_rate=TAX_RATE)
         100*interest/100*(1-tax_rate)
       end
+      
+      def self.tax_rate(bond_name,bond_code)    
+        bond_name.include?("国债") ? 0 : TAX_RATE
+      end
+      
     end
     
     #F=P*(1+i)^n
