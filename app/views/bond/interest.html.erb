@@ -18,7 +18,8 @@
 		<tr>
 			<td>Name</td>
 			<td>Code</td>
-			<td>Price</td>			
+			<td>Price</td>
+			<td>Accrued Interest</td>		
 			<td>revenue</td>
 			<td>compound_interest</td>
 			<td>revenue/10000</td>
@@ -35,12 +36,13 @@
 			<td><%=bond.name%></td>
 			<td><a target='_blank' href='<%=bond.detail_url%>'><%=bond.code%></a></td>
 			<td><%=bond.price%></td>
+			<td><%=bond.accrued_interest%></td>
 			<td><%=bond.total_revenue%></td>
 			<td><%=bond.compound_interest%></td>
 			<td><%=bond.ten_thousand_revenue%></td>
 			<td><%=bond.ten_thousand_compound_interest%></td>
 			<td><%=bond.hold_years%>
-			<td><%=bond.issue_date.advance(:years => bond.term).strftime('%Y-%m-%d')%></td>
+			<td><%=bond.dated_date.advance(:years => bond.maturity).strftime('%Y-%m-%d')%></td>
 			<td class="<%if bond.change_rate > 0%>upRed<%else%>downGreen<%end%>"><%=bond.change_rate%></td>
 			<td><%=bond.updated_at.strftime('%Y-%m-%d')%></td>
 		</tr>

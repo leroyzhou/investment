@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Bond < ActiveRecord::Base
   
   attr_accessor :compoundInterest
@@ -6,29 +7,34 @@ class Bond < ActiveRecord::Base
   attr_accessor :tenThousandRevenue
   attr_accessor :tenThousandCompoundInterest
   
+  TYPE_NATIONAL = 0
+  TYPE_CORPORATE = 1
+  TYPE_CONVERTIBLE = 2  
+  
   def hold_years
-    Lei::Utils.distance_years(self.issue_date.advance(:years => self.term), Time.now).round(2)
+    Lei::Utils.distance_years(self.dated_date.advance(:years => self.maturity), Time.now).round(2)
   end
   
   def revenue_years
-    Lei::Utils.distance_years(self.issue_date.advance(:years => self.term), Time.now).to_i + 1
+    Lei::Utils.distance_years(self.dated_date.advance(:years => self.maturity), Time.now).to_i + 1
+  end
+  
+  def accrued_interest
+    (self.coupon/365 * accrued_days * self.par/100).round(2)
+  end
+  
+  def accrued_days
+    fixed_year = Date.today.month > self.dated_date.month ? 0 : 1
+    (Date.today - Date.new(Date.today.year - fixed_year, self.dated_date.month, self.dated_date.day) + 1)
   end
   
   def detail_url
-    Lei::BondParser::BOND_DETAILS_BASE + self.uri
-  end
-  
-  def update_bond(bond_hash)
-    self.price = bond_hash[:price]
-    self.change = bond_hash[:change]
-    self.change_rate = bond_hash[:change_rate]
-    self.volume = bond_hash[:volume]
-    self.save!
+    Lei::BondParser::BOND_DETAIL_BASE + self.uri
   end
   
   def total_revenue
     tax_rate = Lei::Investment::Bond.tax_rate(self.name, self.code)
-    @totalRevenue ||= Lei::Investment::Bond.total_revenue(self.price, self.interest, self.revenue_years,tax_rate).round(2)
+    @totalRevenue ||= (Lei::Investment::Bond.total_revenue(self.price, self.coupon, self.revenue_years,tax_rate) - accrued_interest).round(2)
   end
   
   def compound_interest
@@ -41,6 +47,24 @@ class Bond < ActiveRecord::Base
   
   def ten_thousand_compound_interest
     @tenThousandcompoundIterest ||= (Lei::Investment.compute_compound_interest_by_revenue(self.price*100,self.ten_thousand_revenue,self.hold_years)*100).round(2) 
+  end
+  
+  def update_bond(bond_hash)
+    self.price = bond_hash[:price]
+    self.change = bond_hash[:change]
+    self.change_rate = bond_hash[:change_rate]
+    self.volume = bond_hash[:volume]
+    self.save!
+  end
+  
+  def self.bond_type(name)
+    if name.include?("国债")
+      TYPE_NATIONAL
+    elsif name.include?("转债")
+      TYPE_CONVERTIBLE
+    else
+      TYPE_CORPORATE
+    end
   end
   
   def self.commission(fund)
@@ -64,13 +88,14 @@ class Bond < ActiveRecord::Base
   end   
   
   def self.create_bond(bond_hash)
-    details = Lei::BondParser.parse_details_from_uri(bond_hash[:uri])
-    bond_hash.merge!(details)
+    detail = Lei::BondParser.bond_detail(bond_hash[:uri])
+    bond_hash.merge!(detail)
+    bond_hash[:bond_type] = bond_type(bond_hash[:name])
     self.create!(bond_hash)
   end  
   
   def self.update_bonds
-    bonds = Lei::BondParser.parse_quote_from_url
+    bonds = Lei::BondParser.quote
     bonds.each do |bond|
 #      begin
         Bond.save_bond(bond)

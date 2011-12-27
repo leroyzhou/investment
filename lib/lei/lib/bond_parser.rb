@@ -1,35 +1,36 @@
+#encoding: UTF-8
 require 'net/http'
 require 'iconv'
 
 module Lei
   class BondParser
     BOND_QUOTE_LINK = 'http://bond.jrj.com.cn/quote/'
-    BOND_DETAILS_BASE = 'http://bond.jrj.com.cn'
+    BOND_DETAIL_BASE = 'http://bond.jrj.com.cn'    
     
-    def self.bond
-      BOND_QUOTE_LINK
+    def self.bond_detail_link(bond_uri)
+      BOND_DETAIL_BASE + bond_uri
     end
     
-    def self.parse_quote_from_url
+    def self.quote
       parse_quote(fetch_utf8_body(BOND_QUOTE_LINK))
     end
     
-    def self.parse_quote_from_file(file_root)      
+    def self.quote_by_file(file_root)      
       File.open(file_root,'r') do |f|
         body = f.read
         return parse_quote(body)
       end      
     end
     
-    def self.parse_details_from_uri(uri)
-      utf8_body = fetch_utf8_body(BOND_DETAILS_BASE+uri)
-      parse_bond_details(utf8_body)
+    def self.bond_detail(bond_uri)
+      utf8_body = fetch_utf8_body(bond_detail_link(bond_uri))
+      parse_bond_detail(utf8_body)
     end
     
-    def self.parse_details_from_file(file_root)
+    def self.bond_detail_by_file(file_root)
       File.open(file_root,'r') do |f|
         body = f.read
-        return parse_bond_details(body)
+        return parse_bond_detail(body)
       end  
     end
     
@@ -48,29 +49,29 @@ module Lei
         bond = {}
         next if b['class'] == 'th1'        
         children = b.children        
-        bond[:name] = children.first.children.first.content        
+        bond[:name] = children.first.children.first.content
         bond[:uri] = children.first.children.first.attributes["href"].value
         bond[:code] = children[2].children.first.content
         bond[:price] = children[4].children.first.content
         bond[:change] = children[6].children.first.content
         bond[:change_rate] = children[8].children.first.content
-        bond[:volume] = children[12].children.first.content
+        bond[:volume] = children[14].children.first.content
         bonds << bond
       end
       bonds
     end
     
-    def self.parse_bond_details(details_body)
-      doc = Nokogiri::HTML(details_body)
+    def self.parse_bond_detail(detail_body)
+      doc = Nokogiri::HTML(detail_body)
       detail_elems = doc.search('table.dt2/tr')
       bond = {}
-      bond[:full_name] = detail_elems.first.children[2].children.first.content
-      bond[:circulation] = detail_elems[2].children[2].children.first.content
+      bond[:issuer] = detail_elems.first.children[2].children.first.content
+      bond[:quantity] = detail_elems[2].children[2].children.first.content
       bond[:par] = detail_elems[2].children[6].children.first.content
-      bond[:term] = detail_elems[3].children[6].children.first.content
-      bond[:interest] = detail_elems[4].children[2].children.first.content
-      bond[:issue_date] = detail_elems[6].children[2].children.first.content.gsub(/(\s|\t|\n)/,'')
-      bond[:interest_way] = detail_elems[7].children[6].children.first.content.gsub(/(\s|\t|\n)/,'')
+      bond[:maturity] = detail_elems[3].children[6].children.first.content
+      bond[:coupon] = detail_elems[4].children[2].children.first.content
+      bond[:dated_date] = detail_elems[6].children[2].children.first.content.gsub(/(\s|\t|\n)/,'')
+      bond[:par_frequency] = detail_elems[7].children[6].children.first.content.gsub(/(\s|\t|\n)/,'')
       bond
     end
     
@@ -90,6 +91,6 @@ end
 if __FILE__ == $0
   require 'rubygems'
   require 'nokogiri'
-  puts Lei::BondParser.parse_details_from_uri("/bonddetail/2/120604.shtml")
-  #Lei::BondParser.parse_details_from_file('details.html')
+  puts Lei::BondParser.bond_detail("110011")
+  #puts Lei::BondParser.parse_detail_from_file('126019')
 end
