@@ -1,12 +1,19 @@
 module Lei
   module Utils
     
-    def self.distance_years(date1,date2)
-      fixed_day = 0
-      (date2.year..date1.year).each do |y|
-        fixed_day += 1 if is_leap_year?(y)
+    def self.distance_years(begin_date,end_date=Date.today)
+      amend_day = 0
+      (begin_date.year..end_date.year).each do |y|
+        amend_day += 1 if is_leap_year?(y)
       end
-      (((date1 - date2)/(3600*24) - fixed_day)/365)    
+      ((distance_days(begin_date,end_date) - amend_day)/365).to_f
+    end
+    
+    def self.distance_days(begin_date,end_date=Date.today)
+      begin_date = begin_date.to_date if !begin_date.is_a?(Date)
+      end_date = end_date.to_date if !end_date.is_a?(Date)
+      
+      (end_date - begin_date).abs
     end
     
     
