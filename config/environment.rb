@@ -5,4 +5,4 @@ require File.expand_path('../application', __FILE__)
 Investment::Application.initialize!
 
 
-require 'lei/lei'
+require 'lei/init'

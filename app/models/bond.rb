@@ -11,24 +11,15 @@ class Bond < ActiveRecord::Base
   TYPE_CORPORATE = 1
   TYPE_CONVERTIBLE = 2  
   
-  include Lei::Investment::Bond  
+  include Lei::Investment::Bond::Common  
   
   def detail_url
-    Lei::BondParser::BOND_DETAIL_BASE + self.uri
+    Lei::Investment::Bond::Parser::BOND_DETAIL_BASE + self.uri
   end
   
   def compound_interest
     return 0 if self.price > (total_revenue+self.par)
     @compoundIterest ||= (Lei::Investment.compute_compound_interest_by_revenue(self.price,total_revenue,hold_years)*100).round(2) 
-  end
-  
-  def ten_thousand_revenue
-    @tenThousandRevenue ||= (self.total_revenue*100 - Bond.commission(10000)).round(2)
-  end
-  
-  def ten_thousand_compound_interest
-    return 0 if self.price > (total_revenue+self.par)
-    @tenThousandcompoundIterest ||= (Lei::Investment.compute_compound_interest_by_revenue(self.price*100,self.ten_thousand_revenue,self.hold_years)*100).round(2) 
   end
   
   def update_bond(bond_hash)
@@ -54,8 +45,15 @@ class Bond < ActiveRecord::Base
     comm > 1 ? comm : 1
   end
   
-  def self.load_all_bond
-    bonds = Bond.all
+  def self.load_all_bond(options)
+    bonds = if options.blank?
+              Bond.all
+            else
+              conditions = {}
+              conditions[:bond_type] = options[:type] if options[:type]
+              Bond.where(conditions).all
+            end
+    
     yield(bonds)
   end
   
@@ -70,14 +68,14 @@ class Bond < ActiveRecord::Base
   end   
   
   def self.create_bond(bond_hash)
-    detail = Lei::BondParser.bond_detail(bond_hash[:uri])
+    detail = Lei::Investment::Bond::Parser.bond_detail(bond_hash[:uri])
     bond_hash.merge!(detail)
     bond_hash[:bond_type] = bond_type(bond_hash[:name])
     self.create!(bond_hash)
   end  
   
   def self.update_bonds
-    bonds = Lei::BondParser.quote
+    bonds = Lei::Investment::Bond::Parser.quote
     bonds.each do |bond|
 #      begin
         Bond.save_bond(bond)
