@@ -17,10 +17,12 @@ class Bond < ActiveRecord::Base
     Lei::Investment::Bond::Parser::BOND_DETAIL_BASE + self.uri
   end
   
-  def compound_interest
+  def rate_of_compound_interest
     return 0 if self.price > (total_revenue+self.par)
-    @compoundIterest ||= (Lei::Investment.compute_compound_interest_by_revenue(self.price,total_revenue,hold_years)*100).round(2) 
-  end
+    srevenue = (Lei::Investment.rate_of_compound_interest(self.price,total_revenue,hold_years)*100).round(2)
+    crevenue = (Lei::Investment.rate_of_compound_interest(self.price,compound_revenue,hold_years)*100).round(2)
+    @compoundInterest ||= [srevenue,crevenue]
+  end  
   
   def update_bond(bond_hash)
     self.price = bond_hash[:price]

@@ -36,9 +36,10 @@
 			<td><a target='_blank' alt='<%bond.code%>' href='<%=bond.detail_url%>'><%=bond.name%></a></td>
 			<td><%=bond.price%></td>
 			<td><%=bond.coupon%> (<%=bond.year_interest%>)</td>
-			<td><%=bond.accrued_interest%></td>			
-			<td><%=bond.total_revenue%></td>
-			<td><%=bond.compound_interest%></td>						
+			<td><%=bond.accrued_interest%></td>	
+			<td><%=bond.total_revenue%>/<%=bond.compound_revenue%></td>
+			<%rate = bond.rate_of_compound_interest%>
+			<td><%=rate[0]%>/<%=rate[1]%></td>						
 			<td><%=bond.hold_years%>
 			<td><%=bond.dated_date.advance(:years => bond.maturity).strftime('%Y-%m-%d')%></td>
 			<td class="<%if bond.change_rate > 0%>upRed<%else%>downGreen<%end%>"><%=bond.change_rate%></td>

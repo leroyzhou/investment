@@ -19,6 +19,21 @@ module Lei
         end
         
         def compound_revenue(selling_price=100)
+          iys = interest_years
+          rate = self.coupon/100 *(1-tax_rate)
+          cinterest = if iys == 1
+                        hold_interest
+                      else
+                        total = 0
+                        total = Lei::Investment.compound_interest_with_principal(year_interest-accrued_interest, rate, iys-1)
+                        if iys-2 > 0
+                         (0..iys-2).each do |y|
+                            total += Lei::Investment.compound_interest_with_principal(year_interest, rate, y)
+                          end
+                        end
+                        total
+                      end
+          (selling_price - self.price + cinterest).round(2)
           
         end
         
