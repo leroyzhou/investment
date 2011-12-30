@@ -1,0 +1,9 @@
+<div id='leftNav'>
+	<ul>
+		<li class='title'>Bonds</li>
+		<li <%if @v[:left_nav_section] == 'bond_all'%>class='current'<%end%>><a>All</a></li>
+		<li <%if @v[:left_nav_section] == 'bond_0'%>class='current'<%end%>><a>National</a></li>
+		<li <%if @v[:left_nav_section] == 'bond_1'%>class='current'<%end%>><a>Coporate</a></li>
+		<li <%if @v[:left_nav_section] == 'bond_2'%>class='current'<%end%>><a>Convertible</a></li>
+	</ul>
+</div>

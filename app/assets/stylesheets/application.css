@@ -5,3 +5,147 @@
  *= require_self
  *= require_tree . 
 */
+/*-------------------------------------------
+* Reset
+* Yahoo css reset
+--------------------------------------------*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+    padding: 0;
+    margin: 0;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+fieldset,img {
+    border: 0;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+    font-weight: normal;
+    font-style: normal;
+}
+ol,ul {
+    list-style: none;
+}
+caption,th {
+    text-align: left;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-weight: normal;
+    font-size: 100%;
+}
+q:before,q:after {
+    content:'';
+}
+abbr,acronym { border: 0;
+}
+
+/*-------------------------------------------------------------------
+* Basic Elements
+* Define styles for basic elements: body, h1-h6, ul, ol, a, p, etc.
+--------------------------------------------------------------------*/
+body{
+    font-family: Arial,sans-serif;
+}
+.clear{
+    clear:both;
+    line-height:0;
+    border-top:0;
+}
+
+#main{
+    background-color: white;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    color: #303030;
+    text-align: left;
+    margin-top:30px
+}
+
+#main #column #leftColumn{
+	width:200px;
+	float:left;
+}
+#main #column #rightColumn{
+	float:left;
+}
+
+#pageName {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#pageName h1{
+	font-size: 28px;
+	font-weight: 700;	
+}
+
+#footer{
+	border: 1px solid #EBEBEB;
+	padding:10px 0;
+	position:relative;
+}
+#footer #shortcut{
+	width:200px;
+	margin:0 auto;
+}
+#footer a{
+	color:#333;
+	font-size: 12px;
+	margin-right:20px;
+	text-decoration:none;
+}
+#footer a:hover{
+	color:#000;
+}
+
+
+table{
+	border-left:1px solid #BBB;
+}
+
+table td{
+	border:1px solid #BBB;
+	border-left: none;
+	padding : 5px;
+	width: 100px;
+}
+
+.upRed{
+	color:red
+}
+.downGreen{
+	color:green
+}
+/*
+ * Left Navigation
+ */
+#leftNav{
+		margin-top:10px;
+}
+#leftNav ul{
+	margin-top:0;
+}
+#leftNav ul li {
+    font-size: 13px;
+    line-height: 29px;
+}
+	#leftColumn ul li a{
+		color: #000;
+		padding-left: 44px;
+	}
+		#leftNav ul li a:hover{
+			background:none repeat scroll 0 0 #F1EEE6;
+		}
+	#leftNav ul li.current a{
+		color: #D14836;		
+		border-left: 5px solid #DD4B39;
+		padding-left: 39px;3
+	}
+
+	#leftNav ul li.title {
+	    color: #D14836;
+	    font-weight: bold;
+	    padding-left:44px;
+	    font-size: 14px;
+	}

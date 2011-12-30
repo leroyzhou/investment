@@ -7,8 +7,25 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+	<header>
+		<%= yield :header%>
+	</header>
+	<div id='main'>		
+		<div id='column'>
+			<div id='leftColumn'>
+				<%=render(:partial=>'common/left_nav')%>
+			</div>
+			<div id='rightColumn'>
+				<div id='pageName'>
+					<%= yield :pageName%>
+				</div>
+				<%= yield %>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<footer>
+		<%= yield :footer%>	
+	</footer>
 </body>
 </html>
