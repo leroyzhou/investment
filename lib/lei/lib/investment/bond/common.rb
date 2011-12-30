@@ -46,7 +46,7 @@ module Lei
         end
         
         def hold_interest        
-         ((self.coupon/100) * interest_years * self.par * (1-tax_rate) - accrued_interest).round(2)        
+         (((self.coupon/100) * interest_years * self.par - accrued_interest)* (1-tax_rate)).round(2)        
         end
         
         def accrued_days

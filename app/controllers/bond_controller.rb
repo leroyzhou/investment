@@ -11,7 +11,7 @@ class BondController < ApplicationController
     options[:type] = params[:type] if params[:type]
     
     @bonds = Bond.load_all_bond(options) do |bonds|
-      bonds.sort{|a,b| b.rate_of_compound_interest[1]<=>a.rate_of_compound_interest[1]}
+      bonds.sort{|a,b| b.rate_of_compound_interest[0]<=>a.rate_of_compound_interest[0]}
     end
   end
   
