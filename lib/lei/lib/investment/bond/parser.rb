@@ -71,7 +71,8 @@ module Lei
           bond[:quantity] = detail_elems[2].children[2].children.first.content
           bond[:par] = detail_elems[2].children[6].children.first.content
           bond[:maturity] = detail_elems[3].children[6].children.first.content
-          bond[:coupon] = detail_elems[4].children[2].children.first.content
+          pcoupon = detail_elems[4].children[2].children.first.content
+          bond[:coupon] = pcoupon.to_f/100
           bond[:dated_date] = detail_elems[6].children[2].children.first.content.gsub(/(\s|\t|\n)/,'')
           bond[:par_frequency] = detail_elems[7].children[6].children.first.content.gsub(/(\s|\t|\n)/,'')
           bond

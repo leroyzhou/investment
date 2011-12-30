@@ -20,7 +20,7 @@ module Lei
         
         def compound_revenue(selling_price=100)
           iys = interest_years
-          rate = self.coupon/100 *(1-tax_rate)
+          rate = self.coupon * (1-tax_rate)
           cinterest = if iys == 1
                         hold_interest
                       else
@@ -38,7 +38,7 @@ module Lei
         end
         
         def year_interest
-         (100*self.coupon/100*(1-tax_rate)).round(2)
+         (100*self.coupon*(1-tax_rate)).round(2)
         end
         
         def interest_years
@@ -46,7 +46,7 @@ module Lei
         end
         
         def hold_interest        
-         (((self.coupon/100) * interest_years * self.par - accrued_interest)* (1-tax_rate)).round(2)        
+         (((self.coupon) * interest_years * self.par - accrued_interest)* (1-tax_rate)).round(2)        
         end
         
         def accrued_days
@@ -55,11 +55,15 @@ module Lei
         end
         
         def accrued_interest
-         ((self.coupon/100)/365 * accrued_days * self.par).round(2)
+         ((self.coupon)/365 * accrued_days * self.par).round(2)
         end
         
         def tax_rate    
           self.name.include?("国债") ? 0 : TAX_RATE
+        end
+        
+        def coupon_percent
+          (self.coupon*100).round(2)
         end
         
       end
