@@ -1,12 +1,6 @@
 class BondController < ApplicationController
   
-  def index
-    #bond = Lei::BondParser.bond
-    return render(:text => '1')
-  end
-    
-  def interest
-    
+  def index    
     options = {}
     if params[:type]
       options[:type] = params[:type]
