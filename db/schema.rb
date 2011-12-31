@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20111221084805) do
     t.float    "maturity",       :null => false
     t.string   "credit_ratings"
     t.float    "quantity",       :null => false
-    t.string   "bond_type",      :null => false
+    t.integer  "bond_type",      :null => false
     t.float    "price"
     t.float    "change"
     t.float    "change_rate"

@@ -14,7 +14,7 @@ class CreateBonds < ActiveRecord::Migration
       t.string :credit_ratings
       t.float :quantity, :null => false
       
-      t.string :bond_type , :null => false
+      t.integer :bond_type , :null => false
       
       t.float :price
       t.float :change

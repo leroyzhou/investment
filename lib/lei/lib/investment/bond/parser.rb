@@ -72,7 +72,7 @@ module Lei
           bond[:par] = detail_elems[2].children[6].children.first.content
           bond[:maturity] = detail_elems[3].children[6].children.first.content
           pcoupon = detail_elems[4].children[2].children.first.content
-          bond[:coupon] = pcoupon.to_f/100
+          bond[:coupon] = (pcoupon.to_f/100).round(4)
           bond[:dated_date] = detail_elems[6].children[2].children.first.content.gsub(/(\s|\t|\n)/,'')
           bond[:par_frequency] = detail_elems[7].children[6].children.first.content.gsub(/(\s|\t|\n)/,'')
           bond
@@ -96,6 +96,6 @@ end
 if __FILE__ == $0
   require 'rubygems'
   require 'nokogiri'
-  puts Lei::Bond::Parser.bond_detail("110011")
+  puts Lei::Investment::Bond::Parser.bond_detail("/bonddetail/2/122902.shtml")#122897
   #puts Lei::BondParser.parse_detail_from_file('126019')
 end
