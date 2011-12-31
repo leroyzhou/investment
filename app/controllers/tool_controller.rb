@@ -4,10 +4,12 @@ class ToolController < ApplicationController
     
     @v[:left_nav_section] = 'tool_bond_revenue'
     
+    @v[:code] = params[:code]
+    
     return if request.get?
     
     @v[:quatity] = params[:quatity].blank? ? nil : params[:quatity].to_i
-    @v[:code] = params[:code]
+    
     @v[:fund] = params[:fund].blank? ? nil : params[:fund].to_i
     
     return if @v[:code].blank? || (@v[:fund].blank? && @v[:quatity].blank?)

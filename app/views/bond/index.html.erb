@@ -7,7 +7,8 @@
 			<td>Revenue</td>
 			<td>YTM</td>
 			<td>Hold years</td>
-			<td>dead date</td>
+			<td>Maturity date</td>
+			<td>Quantity</td>
 			<td>changed</td>
 			<td>Frequency</td>
 			<td>Update on</td>
@@ -16,14 +17,15 @@
 	<tbody>
 		<%@bonds.each do |bond|%>
 		<tr>
-			<td><a target='_blank' alt='<%bond.code%>' href='<%=hexun_bond_link(bond)%>'><%=bond.name%></a></td>
-			<td><%=bond.price%> (<%=bond.accrued_interest%>)</td>
+			<td style='width:150px'><a target='_blank' alt='<%bond.code%>' href='<%=hexun_bond_link(bond)%>'><%=bond.name%></a> (<%=bond.code%>)</td>
+			<td><a target='_blank' href='/tool/bond_revenue?code=<%=bond.code%>'><%=bond.price%> (<%=bond.accrued_interest%>)</a></td>
 			<td><%=bond.coupon_percent%> (<%=bond.year_interest%>)</td>
 			<td><%=bond.total_revenue%></td>
 			<%rate = bond.rate_of_compound_interest%>
 			<td><%=rate[0]%></td>						
 			<td><%=bond.hold_years%>
-			<td><%=bond.dated_date.advance(:years => bond.maturity).strftime('%Y-%m-%d')%></td>
+			<td><%=bond.maturity_date.strftime('%Y-%m-%d')%></td>
+			<td><%=bond.quantity%></td>
 			<td class="<%if bond.change_rate > 0%>upRed<%else%>downGreen<%end%>"><%=bond.change_rate%></td>
 			<td><%=bond.par_frequency%></td>
 			<td><%=bond.updated_at.strftime('%Y-%m-%d')%></td>

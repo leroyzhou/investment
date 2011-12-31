@@ -6,12 +6,16 @@ module Lei
         
         TAX_RATE = 0.2
         
+        def maturity_date
+          self.dated_date.advance(:years => self.maturity)
+        end
+        
         def full_price
          (self.price + accrued_interest).round(2)
         end
         
         def hold_years
-          Lei::Utils.distance_years(Date.today,self.dated_date.advance(:years => self.maturity)).round(2)
+          Lei::Utils.distance_years(Date.today,maturity_date).round(2)
         end
         
         def total_revenue(selling_price=100)

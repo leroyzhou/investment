@@ -30,7 +30,7 @@
 		<table style='margin-top:50px'>
 			<tr>
 				<td>Name</td>
-				<td><%=@v[:bond].name%></td>
+				<td><a target='_blank' alt='<%@v[:bond].code%>' href='<%=hexun_bond_link(@v[:bond])%>'><%=@v[:bond].name%></a></td>
 			</tr>
 			<tr>
 				<td>Issuer</td>
@@ -41,7 +41,7 @@
 				<td><%=@v[:real_fund]%></td>
 			</tr>
 			<tr>
-				<td>Quatity:</td>
+				<td>Quantity:</td>
 				<td><%=@v[:quatity]%></td>			
 			</tr>
 			<tr>
