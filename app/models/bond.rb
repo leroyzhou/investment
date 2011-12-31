@@ -43,8 +43,16 @@ class Bond < ActiveRecord::Base
   end
   
   def self.commission(fund)
-    comm = fund * 2/10000 * 2
-    comm > 1 ? comm : 1
+    comm = fund * 2/10000
+    comm > 2 ? comm * 2 : 4
+  end
+  
+  def self.load_bond(bond_code)
+    bond = self.where(:code => bond_code).first
+    if bond.blank?
+      #TODO
+    end
+    bond
   end
   
   def self.load_all_bond(options)

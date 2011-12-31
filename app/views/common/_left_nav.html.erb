@@ -9,7 +9,7 @@
 	
 	<ul>
 		<li class='title'>Tools</li>
-		<li><a>Revenue of Bond</a></li>
+		<li <%if @v[:left_nav_section] == 'tool_bond_revenue'%>class='current'<%end%>><a href='/tool/bond_revenue'>Revenue of Bond</a></li>
 		<li><a>Compound Interest</a></li>
 	</ul>	
 </div>

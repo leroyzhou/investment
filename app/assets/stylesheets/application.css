@@ -58,6 +58,9 @@ body{
     text-align: left;
     margin:30px 0;
 }
+#main #column{
+	overflow:hidden;
+}
 
 #main #column #leftColumn{
 	width:200px;
@@ -65,7 +68,12 @@ body{
 }
 #main #column #rightColumn{
 	float:left;
+	margin-right:-200px;
+	width:100%;
 }
+	#rightColumn #rightColumnInner{
+		margin-right:200px;
+	}
 
 #pageName {
     margin-bottom: 10px;
@@ -97,14 +105,17 @@ body{
 }
 
 
-table{
+table td{
+	padding:5px;
+}
+
+table.borderTable{
 	border-left:1px solid #BBB;
 }
 
-table td{
+table.borderTable td{
 	border:1px solid #BBB;
 	border-left: none;
-	padding : 5px;
 	width: 100px;
 }
 

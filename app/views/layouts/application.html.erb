@@ -16,10 +16,12 @@
 				<%=render(:partial=>'common/left_nav')%>
 			</div>
 			<div id='rightColumn'>
-				<div id='pageName'>
-					<%= yield :pageName%>
+				<div id='rightColumnInner'>
+					<div id='pageName'>
+						<%= yield :pageName%>
+					</div>
+					<%= yield %>
 				</div>
-				<%= yield %>
 			</div>
 			<div class="clear"></div>
 		</div>

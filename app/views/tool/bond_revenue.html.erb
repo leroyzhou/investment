@@ -1,0 +1,83 @@
+<%content_for(:header) do%>
+<style type='text/css'>
+	
+</style>
+<%end%>
+<div style='margin-left:120px'>
+	<div>
+		<form method="post" action="/tool/bond_revenue">
+			<table>
+				<tr>
+					<td><label>Bond Code</label></td>
+					<td><input type="text" name="code" value="<%=@v[:code]%>" id="code"/></td>
+				</tr>
+				<tr>
+					<td><label>Quatity</label></td>
+					<td><input type='text' name='quatity' value="<%=@v[:quatity]%>" id='quatity'/></td>
+				</tr>
+				<tr>
+					<td><label>Fund</label></td>
+					<td><input type='text' name='fund' value="<%=@v[:fund]%>" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td style='text-align: right'><input type='submit' name="submit" value='Submit'/></td>
+				</tr>
+			</table>
+		</form>
+		
+		<%if @v[:bond]%>
+		<table style='margin-top:50px'>
+			<tr>
+				<td>Name</td>
+				<td><%=@v[:bond].name%></td>
+			</tr>
+			<tr>
+				<td>Issuer</td>
+				<td><%=@v[:bond].issuer%></td>
+			</tr>
+			<tr>
+				<td>Fund:</td>
+				<td><%=@v[:real_fund]%></td>
+			</tr>
+			<tr>
+				<td>Quatity:</td>
+				<td><%=@v[:quatity]%></td>			
+			</tr>
+			<tr>
+				<td>Price:</td>
+				<td><%=@v[:bond].full_price%></td>			
+			</tr>
+			<tr>
+				<td>Coupon:</td>
+				<td><%=@v[:bond].coupon_percent%></td>
+			</tr>
+			<tr>
+				<td>Date</td>
+				<td><%=@v[:bond].dated_date.strftime('%Y-%m-%d')%>/<%=@v[:bond].maturity%></td>
+			</tr>
+			<tr>
+				<td>Hold Years</td>
+				<td><%=@v[:bond].hold_years%></td>
+			</tr>
+			<tr>
+				<td>Revenue:</td>
+				<td>
+					<%=@v[:revenue]%>
+					<div>
+						<p><%=((100 - @v[:bond].full_price)*@v[:quatity]).to_i%></p>
+					<p><%=@v[:bond].first_year_interest * @v[:quatity]%></p>
+					<%if @v[:bond].interest_years > 1%>
+					<p><%=@v[:bond].year_interest * @v[:quatity]%>*<%=@v[:bond].interest_years - 1%></p>
+					<%end%>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Rate of Compoud interest:</td>
+				<td><%=@v[:bond].rate_of_compound_interest%></td>
+			</tr>
+		</table>
+		<%end%>
+	</div>
+</div>

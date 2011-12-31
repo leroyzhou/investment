@@ -58,6 +58,10 @@ module Lei
          ((self.coupon)/365 * accrued_days * self.par).round(2)
         end
         
+        def first_year_interest
+          (year_interest - accrued_interest).round(2)
+        end
+        
         def tax_rate    
           self.name.include?("国债") ? 0 : TAX_RATE
         end
