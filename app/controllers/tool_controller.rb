@@ -26,7 +26,31 @@ class ToolController < ApplicationController
     
   end
   
-  def compound_interest
+  #return_on_investment
+  def roi
+    @v[:left_nav_section] = 'tool_roi'
+    
+    @v[:capital] = params[:capital].blank? ? nil : params[:capital].to_i
+    @v[:years] = params[:years].blank? ? nil : params[:years].to_i
+    @v[:rate] = params[:rate].blank? ? nil : params[:rate].to_f
+    @v[:schedule] = params[:schedule]
+    
+    return unless [@v[:rate],@v[:years],@v[:capital]].all?
+    
+    case @v[:schedule]
+    when 'once'      
+      @v[:compound_total] = Lei::Investment.compound_interest_with_principal(@v[:capital],@v[:rate]/100,@v[:years])
+      @v[:simple_total] = Lei::Investment.simple_interest_with_principal(@v[:capital],@v[:rate]/100,@v[:years])
+      @v[:capital_total] = @v[:capital]
+    when 'month'
+    else
+      r = Lei::Investment.scheduled_investment(@v[:capital],@v[:rate]/100,@v[:years])
+      @v[:simple_total] = r[:si]
+      @v[:compound_total] = r[:ci]
+      @v[:capital_total] = @v[:capital] * @v[:years]
+    end
+    
+    
     
   end
   

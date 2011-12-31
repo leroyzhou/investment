@@ -6,7 +6,7 @@ module Lei
     
     #F=P*(1+i)^n
     def self.compound_interest_with_principal(fund,rate,years)
-      fund*((1+rate)**years)    
+      (fund*((1+rate)**years)).round(2)
     end
     
     
@@ -29,7 +29,7 @@ module Lei
         compound_total += compound_interest_with_principal(fund,interest,y)
         simple_total += simple_interest_with_principal(fund,interest,y)
       end 
-      {:ci => compound_total, :si=>simple_total}
+      {:ci => compound_total.round(2), :si=>simple_total.round(2)}
     end
     
     #M=P(1+i)[-1+(1+i)^n]/i

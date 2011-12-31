@@ -1,0 +1,58 @@
+<div style='margin-left:120px'>
+	<div>
+		<form method="post" action="/tool/return_on_investment">
+			<table>
+				<tr>
+					<td><label>Capital</label></td>
+					<td><input type="text" name="capital" value="<%=@v[:capital]%>" id="capital"/></td>
+				</tr>
+				<tr>
+					<td>Schedule</td>
+					<td>
+						<input type='radio' name='schedule' value='year' <%if @v[:schedule] == 'year'%>checked='checked'<%end%>/><label>Year</label>
+						<input type='radio' name='schedule' value='once' <%if @v[:schedule] == 'once'%>checked='checked'<%end%>/><label>Once</label>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Years</label></td>
+					<td><input type='text' name='years' value="<%=@v[:years]%>" id='years'/></td>
+				</tr>
+				<tr>
+					<td><label>Rate of interest</label></td>
+					<td><input type='text' name='rate' value="<%=@v[:rate]%>" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td style='text-align: right'><input type='submit' name="submit" value='Submit'/></td>
+				</tr>
+			</table>
+		</form>
+		
+		<%if @v[:capital_total]%>
+		<table class='borderTable' style='margin-top:30px'>
+			<thead>
+				<tr>
+					<td></td>
+					<td>Capital</td>
+					<td>Interest</td>
+				</tr>
+			</thead>
+			<tr>
+				<td>Investment</td>
+				<td><%=@v[:capital_total]%></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Simple interest</td>
+				<td><%=@v[:simple_total]%></td>
+				<td><%=(@v[:simple_total] - @v[:capital_total]).round(2)%></td>
+			</tr>
+			<tr>
+				<td>Compound interest</td>
+				<td><%=@v[:compound_total]%></td>
+				<td><%=(@v[:compound_total] - @v[:capital_total]).round(2)%></td>
+			</tr>
+		</table>
+		<%end%>
+	</div>
+</div>
