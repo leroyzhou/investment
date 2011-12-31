@@ -50,7 +50,7 @@ module Lei
         end
         
         def accrued_days
-          amend_year = Date.today.month > self.dated_date.month ? 0 : 1
+          amend_year = Date.today.month >= self.dated_date.month ? 0 : 1
           Lei::Utils.distance_days(Date.new(Date.today.year - amend_year, self.dated_date.month, self.dated_date.day)) + 1
         end
         

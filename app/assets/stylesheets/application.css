@@ -122,10 +122,11 @@ table td{
 }
 #leftNav ul{
 	margin-top:0;
+	margin-bottom:20px
 }
 #leftNav ul li {
     font-size: 13px;
-    line-height: 29px;
+    line-height: 22px;
 }
 	#leftColumn ul li a{
 		color: #000;
