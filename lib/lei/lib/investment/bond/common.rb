@@ -54,8 +54,11 @@ module Lei
         end
         
         def accrued_days
-          amend_year = Date.today.month >= self.dated_date.month ? 0 : 1
-          Lei::Utils.distance_days(Date.new(Date.today.year - amend_year, self.dated_date.month, self.dated_date.day)) + 1
+          last_interest_day = Date.new(Date.today.year,self.dated_date.month,self.dated_date.day)
+          if last_interest_day > Date.today
+            last_interest_day = last_interest_day.advance(:years => -1)
+          end
+          Lei::Utils.distance_days(last_interest_day) + 1
         end
         
         def accrued_interest
