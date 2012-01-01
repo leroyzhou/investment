@@ -6,6 +6,12 @@
 					<td><label>Bond Code</label></td>
 					<td><input type="text" name="code" value="<%=@v[:code]%>" id="code"/></td>
 				</tr>
+				<%if @v[:bond]%>
+				<tr>
+					<td>Name</td>
+					<td><%=@v[:bond].name%></td>
+				</tr>
+				<%end%>
 				<tr>
 					<td><label>Quatity</label></td>
 					<td><input type='text' name='quatity' value="<%=@v[:quatity]%>" id='quatity'/></td>
@@ -13,6 +19,10 @@
 				<tr>
 					<td><label>Fund</label></td>
 					<td><input type='text' name='fund' value="<%=@v[:fund]%>" /></td>
+				</tr>
+				<tr>
+					<td><label>Price</label></td>
+					<td><input type='text' name='price' value='<%=@v[:price]%>'/></td>
 				</tr>
 				<tr>
 					<td></td>
@@ -60,10 +70,10 @@
 				<td>
 					<%=@v[:revenue]%>
 					<div>
-						<p><%=((100 - @v[:bond].full_price)*@v[:quatity]).to_i%></p>
-					<p><%=@v[:bond].first_year_interest * @v[:quatity]%></p>
+						<p><%=((100 - @v[:bond].full_price)*@v[:quatity]).round(2)%></p>
+					<p><%=(@v[:bond].first_year_interest * @v[:quatity]).round(2)%></p>
 					<%if @v[:bond].interest_years > 1%>
-					<p><%=@v[:bond].year_interest * @v[:quatity]%>*<%=@v[:bond].interest_years - 1%></p>
+					<p><%=(@v[:bond].year_interest * @v[:quatity]).round(2)%>*<%=@v[:bond].interest_years - 1%></p>
 					<%end%>
 					</div>
 				</td>

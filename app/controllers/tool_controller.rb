@@ -12,17 +12,25 @@ class ToolController < ApplicationController
     
     @v[:fund] = params[:fund].blank? ? nil : params[:fund].to_i
     
+    @v[:price] = params[:price].blank? ? nil : params[:price].to_f
+    
     return if @v[:code].blank? || (@v[:fund].blank? && @v[:quatity].blank?)
     
-    @v[:bond] = bond = Bond.load_bond(@v[:code])
+    @v[:bond] = Bond.load_bond(@v[:code])
     
+    if !@v[:price].blank?
+      @v[:bond].price = @v[:price]
+    end
+    
+    bond = @v[:bond]
+        
     if @v[:fund]
       @v[:quatity] = buy_quatity(@v[:fund],bond.full_price)
     end
     
     @v[:real_fund] = (@v[:quatity] * bond.full_price + Bond.commission(@v[:quatity] * bond.full_price)).round(2)
     
-    @v[:revenue] = @v[:quatity] * bond.total_revenue
+    @v[:revenue] = (@v[:quatity] * bond.total_revenue).round(2)
     
   end
   

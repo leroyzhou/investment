@@ -19,7 +19,7 @@ module Lei
         end
         
         def total_revenue(selling_price=100)
-         (selling_price - self.price + hold_interest).round(2)
+         (selling_price - self.full_price + hold_interest).round(2)
         end
         
         def compound_revenue(selling_price=100)
@@ -66,7 +66,7 @@ module Lei
         end
         
         def first_year_interest
-          (year_interest - accrued_interest).round(2)
+          ((self.coupon*self.par - accrued_interest)*(1-tax_rate)).round(2)          
         end
         
         def tax_rate    
