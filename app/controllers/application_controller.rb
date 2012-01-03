@@ -1,3 +1,5 @@
+require File.dirname(__FILE__)+'/../../lib/lei/init'
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
