@@ -28,3 +28,6 @@ Investment::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 end
+
+
+require File.expand_path('../../../lib/lei/init', __FILE__)

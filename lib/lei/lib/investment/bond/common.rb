@@ -29,11 +29,13 @@ module Lei
                         hold_interest
                       else
                         total = 0
-                        total = Lei::Investment.compound_interest_with_principal(year_interest-accrued_interest, rate, iys-1)
+                        total = Lei::Investment.compound_interest_with_principal(first_year_interest, rate, iys-1)
                         if iys-2 > 0
                          (0..iys-2).each do |y|
                             total += Lei::Investment.compound_interest_with_principal(year_interest, rate, y)
                           end
+                        else
+                          total += year_interest
                         end
                         total
                       end

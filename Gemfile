@@ -5,8 +5,6 @@ gem 'rails', '3.1.3'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'pg'
-
 # Use unicorn as the web server
 gem 'unicorn'
 
@@ -15,3 +13,10 @@ gem 'nokogiri'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer'
+
+group :production do
+  gem 'pg'
+end
+group :development, :test do
+  gem 'mysql2'
+end

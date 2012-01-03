@@ -34,7 +34,6 @@ class BondController < ApplicationController
   
   def load_bonds(options)
     @bonds = Bond.load_all_bond(options) do |bonds|
-      puts options.inspect
       if options[:sort] == 'md'
         bonds.sort{|a,b| a.maturity_date <=> b.maturity_date}
       else 
