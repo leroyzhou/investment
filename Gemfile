@@ -14,3 +14,4 @@ gem 'nokogiri'
 
 gem 'uglifier'
 gem 'execjs'
+gem 'therubyracer'
