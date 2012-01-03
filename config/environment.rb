@@ -5,7 +5,6 @@ require File.expand_path('../application', __FILE__)
 Investment::Application.initialize!
 
 require 'lei/init'
-require 'lei/lib/investment/bond/common'
 
 
 
