@@ -4,7 +4,7 @@ require File.expand_path('../application', __FILE__)
 # Initialize the rails application
 Investment::Application.initialize!
 
-require 'lei/init'
+require File.dirname(__FILE__)+'/lib/lei/init'
 
 
 
