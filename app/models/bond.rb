@@ -14,7 +14,7 @@ class Bond < ActiveRecord::Base
   include Lei::Investment::Bond::Common  
   
   def detail_url
-    Lei::Investment::Bond::Parser::BOND_DETAIL_BASE + self.uri
+    ::Lei::Investment::Bond::Parser::BOND_DETAIL_BASE + self.uri
   end
   
   def rate_of_compound_interest
