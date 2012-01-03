@@ -11,7 +11,7 @@ class Bond < ActiveRecord::Base
   TYPE_CORPORATE = 1
   TYPE_CONVERTIBLE = 2  
   
-  #include ::Lei::Investment::Bond::Common  
+  include ::Lei::Investment::Bond::Common  
   
   def detail_url
     ::Lei::Investment::Bond::Parser::BOND_DETAIL_BASE + self.uri
