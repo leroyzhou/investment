@@ -1,5 +1,4 @@
 #encoding: UTF-8
-require Rails.root + '/lib/lei/lib/investment'
 class Bond < ActiveRecord::Base
   
   attr_accessor :compoundInterest
