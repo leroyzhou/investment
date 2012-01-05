@@ -1,3 +1,7 @@
+<div style="margin-bottom:5px">
+	<p><%=@bonds.size%> <span style='font-size:14px;color:#666'><%=@bond_updated_at.strftime('%Y-%m-%d %H:%M:%S')%></span> <span id='update_button' style="margin-left:10px">[<a href="/bond/update" style="text-decoration:none">Update</a>]</span></p>
+	<div class='clear'></div>
+</div>
 <table class='borderTable'>
 	<thead>
 		<tr>
@@ -7,9 +11,9 @@
 			<td>Revenue</td>
 			<td>YTM</td>
 			<td>Hold years</td>
-			<td>Maturity date</td>
+			<td><a href='/bond?sort=md'>Maturity date</a></td>
 			<td>Quantity</td>
-			<td>changed</td>
+			<td><a href='/bond?sort=crd&filter=today'>Changed</a></td>
 			<td>Frequency</td>
 			<td>Update on</td>
 		</tr>

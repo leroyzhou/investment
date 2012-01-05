@@ -25,6 +25,12 @@ class BondController < ApplicationController
     render(:template => "/bond/index")
   end
   
+  def update
+    Bond.update_bonds
+    
+    return redirect_to('/bond')    
+  end
+  
   private
   def init_bond
     @options = {}
@@ -33,13 +39,26 @@ class BondController < ApplicationController
   
   
   def load_bonds(options)
-    @bonds = Bond.load_all_bond(options) do |bonds|
+    @all_bonds = Bond.load_all_bond(options) do |bonds|
       if options[:sort] == 'md'
         bonds.sort{|a,b| a.maturity_date <=> b.maturity_date}
+      elsif options[:sort] == 'crd'
+        bonds.sort{|a,b| b.change_rate <=> a.change_rate}
+      elsif options[:sort] == 'cra'
+        bonds.sort{|a,b| a.change_rate <=> b.change_rate}    
       else 
         bonds.sort{|a,b| b.rate_of_compound_interest[0]<=>a.rate_of_compound_interest[0]}
       end      
     end
+    
+    @bond_updated_at = Bond.updated_time
+    
+    if options[:filter] == 'today'
+      @bonds = @all_bonds.select{|a| a.updated_at.to_date == Date.today}
+      @old_bonds = @all_bonds - @bonds
+    else
+      @bonds = @all_bonds
+    end  
   end
   
 end

@@ -32,6 +32,10 @@ class Bond < ActiveRecord::Base
     self.save!
   end
   
+  def self.updated_time
+    Bond.order(:updated_at=>"desc").first.updated_at
+  end
+  
   def self.bond_type(name)
     if name.include?("国债")
       TYPE_NATIONAL
