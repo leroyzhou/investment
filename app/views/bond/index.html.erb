@@ -1,5 +1,5 @@
 <div style="margin-bottom:5px">
-	<p><%=@bonds.size%> <span style='font-size:14px;color:#666'><%=@bond_updated_at.strftime('%Y-%m-%d %H:%M:%S')%></span> <span id='update_button' style="margin-left:10px">[<a href="/bond/update" style="text-decoration:none">Update</a>]</span></p>
+	<p><%=@bonds.size%> <%if @bond_updated_at%><span style='font-size:14px;color:#666'><%=@bond_updated_at.strftime('%Y-%m-%d %H:%M:%S')%></span><%end%> <span id='update_button' style="margin-left:10px">[<a href="/bond/update" style="text-decoration:none">Update</a>]</span></p>
 	<div class='clear'></div>
 </div>
 <table class='borderTable'>

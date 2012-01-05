@@ -33,7 +33,8 @@ class Bond < ActiveRecord::Base
   end
   
   def self.updated_time
-    Bond.order("updated_at desc").first.updated_at
+    bond = Bond.order("updated_at desc").first
+    bond ? bond.updated_at : nil
   end
   
   def self.bond_type(name)
