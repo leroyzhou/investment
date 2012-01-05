@@ -35,6 +35,7 @@ class BondController < ApplicationController
   def init_bond
     @options = {}
     @options[:sort] = params[:sort] if params[:sort]
+    #@options[:filter] = params[:filter] if params[:filter]
   end
   
   
