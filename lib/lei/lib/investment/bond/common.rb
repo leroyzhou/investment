@@ -29,18 +29,12 @@ module Lei
                         hold_interest
                       else
                         total = 0
-                        total = Lei::Investment.compound_interest_with_principal(first_year_interest, rate, iys-1)
-                        if iys-2 > 0
-                         (0..iys-2).each do |y|
+                        (0..iys-1).each do |y|
                             total += Lei::Investment.compound_interest_with_principal(year_interest, rate, y)
-                          end
-                        else
-                          total += year_interest
                         end
                         total
                       end
-          (selling_price - self.price + cinterest).round(2)
-          
+          (selling_price - self.price + cinterest).round(2)          
         end
         
         def year_interest
@@ -52,7 +46,7 @@ module Lei
         end
         
         def hold_interest        
-         (((self.coupon) * interest_years * self.par - accrued_interest)* (1-tax_rate)).round(2)        
+         (((self.coupon) * interest_years * self.par)* (1-tax_rate)).round(2)        
         end
         
         def accrued_days

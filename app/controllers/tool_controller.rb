@@ -38,8 +38,8 @@ class ToolController < ApplicationController
   def roi
     @v[:left_nav_section] = 'tool_roi'
     
-    @v[:capital] = params[:capital].blank? ? nil : params[:capital].to_i
-    @v[:years] = params[:years].blank? ? nil : params[:years].to_i
+    @v[:capital] = params[:capital].blank? ? nil : params[:capital].to_f
+    @v[:years] = params[:years].blank? ? nil : params[:years].to_f
     @v[:rate] = params[:rate].blank? ? nil : params[:rate].to_f
     @v[:schedule] = params[:schedule]
     

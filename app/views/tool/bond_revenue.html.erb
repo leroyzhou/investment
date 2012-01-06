@@ -51,7 +51,7 @@
 			</tr>
 			<tr>
 				<td>Price:</td>
-				<td><%=@v[:bond].full_price%></td>			
+				<td><%=@v[:bond].full_price%>/<%=@v[:bond].price%></td>			
 			</tr>
 			<tr>
 				<td>Coupon:</td>
@@ -71,10 +71,7 @@
 					<%=@v[:revenue]%>
 					<div>
 						<p><%=((100 - @v[:bond].full_price)*@v[:quatity]).round(2)%></p>
-					<p><%=(@v[:bond].first_year_interest * @v[:quatity]).round(2)%></p>
-					<%if @v[:bond].interest_years > 1%>
-					<p><%=(@v[:bond].year_interest * @v[:quatity]).round(2)%>*<%=@v[:bond].interest_years - 1%></p>
-					<%end%>
+					<p><%=(@v[:bond].year_interest * @v[:quatity]).round(2)%>*<%=@v[:bond].interest_years%></p>
 					</div>
 				</td>
 			</tr>

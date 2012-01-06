@@ -18,9 +18,9 @@ class Bond < ActiveRecord::Base
   end
   
   def rate_of_compound_interest
-    return 0 if self.price > (total_revenue+self.par)
-    srevenue = (Lei::Investment.rate_of_compound_interest(self.price,total_revenue,hold_years)*100).round(2)
-    crevenue = (Lei::Investment.rate_of_compound_interest(self.price,compound_revenue,hold_years)*100).round(2)
+    return 0 if self.full_price > (total_revenue+self.par)
+    srevenue = (Lei::Investment.rate_of_compound_interest(self.full_price,total_revenue,hold_years)*100).round(2)
+    crevenue = (Lei::Investment.rate_of_compound_interest(self.full_price,compound_revenue,hold_years)*100).round(2)
     @compoundInterest ||= [srevenue,crevenue]
   end  
   
