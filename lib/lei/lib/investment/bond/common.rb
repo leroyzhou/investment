@@ -73,6 +73,18 @@ module Lei
           (self.coupon*100).round(2)
         end
         
+        def self.is_national_band?(code,name)
+          name.include?("国债")
+        end
+        
+        def self.is_corporate_bond?(code,name)
+          !(self.is_national_band?(code,name) || self.is_convertible_bond?(code,name))
+        end
+        
+        def self.is_convertible_bond?(code,name)
+          name.include?("转债")
+        end
+        
       end
     end
   end

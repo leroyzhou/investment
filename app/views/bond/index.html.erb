@@ -6,6 +6,7 @@
 	<thead>
 		<tr>
 			<td>Name</td>
+			<td style='width:50px'>Rating</td>
 			<td>Price</td>
 			<td>Coupon</td>
 			<td>Revenue</td>
@@ -22,6 +23,7 @@
 		<%@bonds.each do |bond|%>
 		<tr>
 			<td style='width:150px'><a target='_blank' alt='<%bond.code%>' href='<%=hexun_bond_link(bond)%>'><%=bond.name%></a> (<%=bond.code%>)</td>
+			<td style='width:50px'><%=bond.rating%></td>
 			<td><a target='_blank' href='/tool/bond_revenue?code=<%=bond.code%>'><%=bond.price%> (<%=bond.accrued_interest%>)</a></td>
 			<td><%=bond.coupon_percent%> (<%=bond.year_interest%>)</td>
 			<td><%=bond.total_revenue%></td>

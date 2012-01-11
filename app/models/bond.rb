@@ -89,7 +89,11 @@ class Bond < ActiveRecord::Base
     self.create!(bond_hash)
   end  
   
-  def self.update_bonds
+  def self.update_bonds(refetch = false)
+    if refetch
+      puts "refetch all bonds, delete all"
+      Bond.delete_all
+    end
     bonds = Lei::Investment::Bond::Parser.quote
     bonds.each do |bond|
 #      begin
