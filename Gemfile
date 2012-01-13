@@ -13,6 +13,8 @@ gem 'nokogiri'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer'
+gem 'thin'
+
 
 group :production do
   gem 'pg'
