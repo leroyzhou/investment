@@ -15,6 +15,7 @@
 			<td><a href='/bond?sort=md'>Maturity date</a></td>
 			<td>Quantity</td>
 			<td><a href='/bond?sort=crd&filter=today'>Changed</a></td>
+			<td>Volume</td>
 			<td>Frequency</td>
 			<td>Update on</td>
 		</tr>
@@ -33,6 +34,7 @@
 			<td><%=bond.maturity_date.strftime('%Y-%m-%d')%></td>
 			<td><%=bond.quantity%></td>
 			<td class="<%if bond.change_rate > 0%>upRed<%else%>downGreen<%end%>"><%=bond.change_rate%></td>
+			<td><%=bond.volume > 10000 ? "#{(bond.volume/10000).round(1)} 万" : bond.volume.to_i%></td>
 			<td><%=bond.par_frequency%></td>
 			<td><%=bond.updated_at.strftime('%Y-%m-%d')%></td>
 		</tr>
