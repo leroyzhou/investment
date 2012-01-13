@@ -13,7 +13,7 @@ module Lei
       begin_date = begin_date.to_date if !begin_date.is_a?(Date)
       end_date = end_date.to_date if !end_date.is_a?(Date)
       
-      (end_date - begin_date).abs
+      (end_date - begin_date).abs - 1
     end
     
     

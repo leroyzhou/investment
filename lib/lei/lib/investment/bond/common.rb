@@ -42,7 +42,7 @@ module Lei
         end
         
         def interest_years
-          interest_years = hold_years.to_i + 1
+          interest_years = (Date.today.month == maturity_date.month && Date.today.day == maturity_date.day) ? self.hold_years : self.hold_years.to_i + 1
         end
         
         def hold_interest        
