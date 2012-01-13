@@ -6,16 +6,23 @@ module Lei
   module Investment
     module Bond
       class Parser
-        BOND_QUOTE_LINK = 'http://bond.jrj.com.cn/quote/'
-        BOND_DETAIL_BASE = 'http://bond.jrj.com.cn'  
+        
+        MARKET_HU = '1'
+        MARKET_SHEN = '2'
+        
+        BOND_QUOTE_LINK = 'http://bond.money.hexun.com/quote/default.aspx?market='
+        BOND_DETAIL_BASE = 'http://bond.jrj.com.cn/bonddetail/_MARKET/_BOND_CODE.shtml'
         BOND_RATE_BASE = 'http://bond.money.hexun.com/all_bond/_BOND_CODE.shtml'  
         
-        def self.bond_detail_link(bond_uri)
-          BOND_DETAIL_BASE + bond_uri
+        def self.bond_detail_link(bond_code,market)
+          BOND_DETAIL_BASE.sub(/_MARKET/,market).sub(/_BOND_CODE/,bond_code)
         end
         
         def self.quote
-          parse_quote(fetch_utf8_body(BOND_QUOTE_LINK))
+          hu_bonds = parse_quote(fetch_utf8_body("#{BOND_QUOTE_LINK}#{MARKET_HU}")){|b| b[:market] = MARKET_HU}
+          shen_bonds = parse_quote(fetch_utf8_body("#{BOND_QUOTE_LINK}#{MARKET_SHEN}")){|b| b[:market] = MARKET_SHEN}
+          
+          hu_bonds + shen_bonds
         end
         
         def self.quote_by_file(file_root)      
@@ -25,8 +32,11 @@ module Lei
           end      
         end
         
-        def self.bond_detail(bond_uri)
-          utf8_body = fetch_utf8_body(bond_detail_link(bond_uri))
+        def self.bond_detail(bond_code, market)
+          #jrj 2 is hu, 1 is shen
+          market = market == '2' ? '1' : '2'
+          link = bond_detail_link(bond_code, market)
+          utf8_body = fetch_utf8_body(link)
           parse_bond_detail(utf8_body)
         end
         
@@ -44,21 +54,20 @@ module Lei
           convert_to_utf8(res.body)
         end    
         
-        def self.parse_quote(quote_body)
+        def self.parse_quote(quote_body,&block)
           doc = Nokogiri::HTML(quote_body)
           bonds = []
-          bond_elems = doc.search('table.table_jyshq2/tr')      
-          bond_elems.each do |b|
+          bond_elems = doc.search('div#BondQuote1/table/tr')            
+          bond_elems[2..-2].each do |b|
+            children = b.search('td')
             bond = {}
-            next if b['class'] == 'th1'        
-            children = b.children        
-            bond[:name] = children.first.children.first.content
-            bond[:uri] = children.first.children.first.attributes["href"].value
-            bond[:code] = children[2].children.first.content
-            bond[:price] = children[4].children.first.content
-            bond[:change] = children[6].children.first.content
-            bond[:change_rate] = children[8].children.first.content
-            bond[:volume] = children[14].children.first.content            
+            bond[:code] = children.first.content
+            bond[:name] = children[1].children.first.content.strip()
+            bond[:price] = children[2].content
+            bond[:change] = children[3].content
+            bond[:change_rate] = children[4].children.first.content
+            bond[:volume] = children[6].content
+            yield(bond) if block_given?
             bonds << bond
           end
           bonds
@@ -113,7 +122,8 @@ if __FILE__ == $0
   require 'rubygems'
   require 'nokogiri'
   require '~/Workspace/investment/lib/lei/lib/investment/bond/common'
-  puts Lei::Investment::Bond::Parser.bond_detail("/bonddetail/2/110011.shtml")#122897
+  #puts Lei::Investment::Bond::Parser.quote
+  puts Lei::Investment::Bond::Parser.bond_detail('110011','2')#122897
   #puts Lei::Investment::Bond::Parser.parse_bond_rate('111044')
   #puts Lei::BondParser.parse_detail_from_file('126019')
 end

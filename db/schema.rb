@@ -11,12 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120111062023) do
+ActiveRecord::Schema.define(:version => 20120113030937) do
 
   create_table "bonds", :force => true do |t|
     t.string   "name",           :null => false
     t.string   "code",           :null => false
-    t.string   "uri",            :null => false
     t.string   "issuer"
     t.float    "par",            :null => false
     t.string   "par_frequency",  :null => false
@@ -33,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20120111062023) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "rating"
+    t.string   "market"
   end
 
   add_index "bonds", ["code"], :name => "index_bonds_on_code"

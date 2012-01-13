@@ -9,7 +9,10 @@ class Bond < ActiveRecord::Base
   
   TYPE_NATIONAL = 0
   TYPE_CORPORATE = 1
-  TYPE_CONVERTIBLE = 2  
+  TYPE_CONVERTIBLE = 2
+  
+  MARKET_HU = Lei::Investment::Bond::Parser::MARKET_HU
+  MARKET_SHEN = Lei::Investment::Bond::Parser::MARKET_SHEN
   
   include Lei::Investment::Bond::Common  
   
@@ -83,7 +86,7 @@ class Bond < ActiveRecord::Base
   end   
   
   def self.create_bond(bond_hash)
-    detail = Lei::Investment::Bond::Parser.bond_detail(bond_hash[:uri])
+    detail = Lei::Investment::Bond::Parser.bond_detail(bond_hash[:code],bond_hash[:market])
     bond_hash.merge!(detail)
     bond_hash[:bond_type] = bond_type(bond_hash[:name])
     self.create!(bond_hash)
