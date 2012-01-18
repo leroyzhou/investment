@@ -86,8 +86,11 @@ class Bond < ActiveRecord::Base
   end   
   
   def self.create_bond(bond_hash)
-    detail = Lei::Investment::Bond::Parser.bond_detail(bond_hash[:code],bond_hash[:market])
-    bond_hash.merge!(detail)
+     begin
+      detail = Lei::Investment::Bond::Parser.bond_detail(bond_hash[:code],bond_hash[:market])
+      bond_hash.merge!(detail)
+    rescue
+    end  
     bond_hash[:bond_type] = bond_type(bond_hash[:name])
     self.create!(bond_hash)
   end  
