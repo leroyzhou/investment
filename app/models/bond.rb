@@ -97,16 +97,15 @@ class Bond < ActiveRecord::Base
   
   def self.update_bonds(refetch = false)
     if refetch
-      puts "refetch all bonds, delete all"
       Bond.delete_all
     end
     bonds = Lei::Investment::Bond::Parser.quote
     bonds.each do |bond|
-#      begin
+      begin
         Bond.save_bond(bond)
-#      rescue
-#        logger.error "update bond error : #{bond[:code]}"
-#      end
+      rescue
+        logger.error "update bond error : #{bond[:code]}"
+      end
     end      
   end
   
