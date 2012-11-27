@@ -29,7 +29,7 @@
 			<td><%=bond.coupon_percent%> (<%=bond.year_interest%>)</td>
 			<td><%=bond.total_revenue%></td>
 			<%rate = bond.rate_of_compound_interest%>
-			<td><%=rate[0]%></td>						
+			<td><%=rate[0]%>|<%=rate[1]%></td>						
 			<td><%=bond.hold_years%>
 			<td><%=bond.maturity_date.strftime('%Y-%m-%d')%></td>
 			<td><%=bond.quantity%></td>
