@@ -27,7 +27,7 @@
 			<td style='width:50px'><%=bond.rating%></td>
 			<td><a target='_blank' href='/tool/bond_revenue?code=<%=bond.code%>'><%=bond.price%> (<%=bond.accrued_interest%>)</a></td>
 			<td style='width:70px'><%=bond.coupon_percent%> (<%=bond.year_interest%>)</td>
-			<td style='width:1200px'><%=bond.total_revenue%> ( <%=bond.compound_revenue%> ) </td>
+			<td style='width:120px'><%=bond.total_revenue%> ( <%=bond.compound_revenue%> ) </td>
 			<%rate = bond.rate_of_compound_interest%>
 			<td><%=rate[0]%> ( <%=rate[1]%> ) </td>						
 			<td><%=bond.hold_years%>
