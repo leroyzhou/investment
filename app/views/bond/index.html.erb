@@ -10,7 +10,8 @@
 			<td>Price</td>
 			<td>Coupon</td>
 			<td>Revenue</td>
-			<td>YTM</td>
+			<td><a href='/bond?filter=today'>YTM</a></td>
+			<td><a href='/bond?sort=ytmc&filter=today'>YTMC</a></td>
 			<td>Hold years</td>
 			<td><a href='/bond?sort=md'>Maturity date</a></td>
 			<td>Quantity</td>
@@ -29,7 +30,8 @@
 			<td style='width:70px'><%=bond.coupon_percent%> (<%=bond.year_interest%>)</td>
 			<td style='width:120px'><%=bond.total_revenue%> ( <%=bond.compound_revenue%> ) </td>
 			<%rate = bond.rate_of_compound_interest%>
-			<td><%=rate[0]%> ( <%=rate[1]%> ) </td>						
+			<td><%=rate[0]%></td>
+			<td><%=rate[1]%></td>						
 			<td><%=bond.hold_years%>
 			<td><%=bond.maturity_date.strftime('%Y-%m-%d')%></td>
 			<td><%=bond.quantity%></td>

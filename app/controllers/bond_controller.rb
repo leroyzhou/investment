@@ -46,7 +46,9 @@ class BondController < ApplicationController
       elsif options[:sort] == 'crd'
         bonds.sort{|a,b| b.change_rate <=> a.change_rate}
       elsif options[:sort] == 'cra'
-        bonds.sort{|a,b| a.change_rate <=> b.change_rate}    
+        bonds.sort{|a,b| a.change_rate <=> b.change_rate}
+      elsif options[:sort] == 'ytmc'
+         bonds.sort{|a,b| b.rate_of_compound_interest[1]<=>a.rate_of_compound_interest[1]}
       else 
         bonds.sort{|a,b| b.rate_of_compound_interest[0]<=>a.rate_of_compound_interest[0]}
       end      
