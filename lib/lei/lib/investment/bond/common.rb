@@ -55,6 +55,8 @@ module Lei
             last_interest_day = last_interest_day.advance(:years => -1)
           end
           Lei::Utils.distance_days(last_interest_day) + 1
+        rescue 
+          return 0
         end
         
         def accrued_interest
